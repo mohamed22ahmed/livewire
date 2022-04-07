@@ -62,7 +62,7 @@
                 </div>
 
                 <div class="col-md-4">
-                    <h3>Previous</h3>
+                    <h3>Previous &nbsp; <a href="{{ route('clear_previous_search') }}" style="font-size:18px">Clear</a></h3>
                     <ul class="search-results" style="max-height: 380px">
                         @if ($previous_search != null)
                             @foreach ($previous_search as $previous)

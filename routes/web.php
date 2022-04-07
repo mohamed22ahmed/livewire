@@ -25,3 +25,4 @@ Route::get('/search', function(){
 });
 
 Route::get('/get_results',[SearchController::class, 'get_results'])->name('get_results');
+Route::get('/clear_previous_search', [SearchController::class, 'clear_previous_search'])->name('clear_previous_search');

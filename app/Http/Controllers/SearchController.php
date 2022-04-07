@@ -72,4 +72,10 @@ class SearchController extends Controller
         array_push($previous_search_array, $q);
         session()->put('previous_search', $previous_search_array);
     }
+
+    public function clear_previous_search()
+    {
+        session()->put('previous_search', []);
+        return redirect()->back();
+    }
 }
