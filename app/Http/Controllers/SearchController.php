@@ -40,8 +40,8 @@ class SearchController extends Controller
         $itemArray = json_encode([
             'query' => $request->q,
             'options' => [
-                'offset' => $page,
-                'limit' => 20 * $page,
+                'offset' => ($page - 1) * 20,
+                'limit' => 20,
                 "sortBy" => [
                     [
                         "attribute" => $attribute,
@@ -56,8 +56,10 @@ class SearchController extends Controller
 
         $items = json_decode($results->body())->items;
         if(count($items) > 0){
+            $itemsCount = json_decode($results->body())->metadata->count;
             $this->set_previous_search($request->q);
-            return view('pages.search')->with(['items' => $items, 'searchQuery' => $request->q]);
+
+            return view('pages.search')->with(['items' => $items, 'searchQuery' => $request->q, 'itemsCount' => $itemsCount]);
         } else{
             return redirect()->back()->withErrors("We're sorry! We couldn't find any results. Please try again.");
         }
