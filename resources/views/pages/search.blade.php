@@ -88,20 +88,42 @@
                     </ul>
                 </div>
 
+
+                @php
+                    $allParam = \Request::all();
+                    $totalPages =  ceil( $itemsCount / 20);
+                    $pageSt = 1;
+                    $pageEnd = 5;
+                    if(isset($page) && $page > 3 ){
+                        $pageSt = $page - 2;
+                        $pageEnd = $page + 2;
+                    }
+                @endphp
                 <nav class="d-md-flex justify-content-between align-items-center border-top pt-3" aria-label="Page navigation">
-                    <div class="text-center text-md-left mb-3 mb-md-0">Showing results
+                    @php
+                        $from = isset($allParam['previous']) ? ($allParam['previous_value']-1)*20+1 : ($allParam['page']-1)*20+1;
+                        $to = isset($allParam['previous']) ? ($allParam['previous_value']-1)*20+20 : ($allParam['page']-1)*20+20;
+                    @endphp
+                    <div class="text-center text-md-left mb-3 mb-md-0">Showing {{ $from }} – {{ $to }}
+                        of {{ $itemsCount }} results
                     </div>
                     <ul class="pagination mb-0 pagination-shop justify-content-center justify-content-md-start">
-                        <li class="page-item">
-                            <input type="submit" class="btn page-link" value="1" name="page">
-                        </li>
-                        <li class="page-item">
-                            <input type="submit" class="btn page-link" value="2" name="page">
-                        </li>
+                        <!-- send another parameter if it previous or next -->
+                        <!-- <li class="page-item">
+                            <input type="hidden" name="previous_value" value="{{-- $allParam['previous_value'] --}}">
+                            <input type="submit" class="btn page-link {{-- ($allParam['previous_value']==1)?'disabled':'' --}}" value="previous" name="previous">
+                        </li> -->
+
+                        @for($pageSt ; $pageSt <= $pageEnd ; $pageSt++)
+                            <li class="page-item">
+                                <input type="submit" onclick="{{ $allParam['previous']=null }}" class="btn page-link {{($allParam['page'] == $pageSt)? 'current' : ''}}" value="{{ $pageSt }}" name="page">
+                            </li>
+                        @endfor
+
                     </ul>
                 </nav>
-            </div>
-        </form>
+            </form>
+        </div>
     </div>
 </div>
 @endsection

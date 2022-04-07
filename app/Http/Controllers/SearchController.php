@@ -10,6 +10,7 @@ class SearchController extends Controller
     public function get_results(Request $request){
         // pagination = number of page * 20(limit number)
         $page = isset($request->page) ? $request->page : 1;
+        // $page = isset($request->previous) ? $request->previous_value : $page;
 
         // sortBy from request
         $sortBy = isset($request->sortBy) ? $request->sortBy : 'popularity';
