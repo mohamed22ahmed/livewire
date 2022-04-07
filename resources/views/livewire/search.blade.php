@@ -12,9 +12,8 @@
         <div id="result-ajax-search" class="result-ajax-search dropdown-menu" style="min-height: 800px; width: 100%">
             <div class="row">
                 <div class="col-md-4">
-                    <span>Results</span>
+                    <h3>Results</h3>
                     <ul class="search-results" style="max-height: 380px">
-
                         @if ($results != null)
                             @php
                                 $html_results = '';
@@ -41,21 +40,20 @@
                                     $slug= str_replace(' ','-', $slug); // replace spaces by dashes
                                     $slug= strtolower($slug);  // make it lowercase
 
-                                    $html_results .= "
+                                    $html_results .= "<div class='product-item__body pb-xl-2'>
                                             <div class='mb-2 overflow-hidden' style='height: 70px;'>
                                                 <a href='/book/" . "$title/$slug/used' class='d-block text-left'>
                                                     <img class='img-fluid' src='".$result->product->photo."' alt='".$title."' style='max-height: 200px;'>
                                                 </a>
                                             </div>
-                                            <span class='font-weight-bold'>$title</span> $author
-                                        ";
+                                            <a href='/book/" . "$title/$slug/used' class='font-weight-bold'>$title</a> $author
+                                        </div>";
 
                                     $html_results .= "</div>";
 
-                                    if($indx%2 == 0)
-                                        $html_results .= "</div>";
+                                    if($indx%2 == 1)
+                                        $html_results .= "</div><br>";
                                 }
-                                // dd($html_result)
                             @endphp
 
                             {!! $html_results !!}
@@ -64,7 +62,7 @@
                 </div>
 
                 <div class="col-md-4">
-                    <span>Previous</span>
+                    <h3>Previous</h3>
                     <ul class="search-results" style="max-height: 380px">
                         @if ($previous_search != null)
                             @foreach ($previous_search as $previous)
@@ -75,7 +73,7 @@
                 </div>
 
                 <div class="col-md-4">
-                    <span>Suggested</span>
+                    <h3>Suggested</h3>
                     <ul class="search-results" style="max-height: 380px">
                         @if ($suggested_words != null)
                             @foreach ($suggested_words as $word)
