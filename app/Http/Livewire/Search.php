@@ -15,7 +15,7 @@ class Search extends Component
 
     public function get_results()
     {
-        $this->suggested_words = [$this->search,$this->search,$this->search];
+        $this->suggested_words = $this->get_suggested_words();
         $this->results = $this->get_search_results();
         $this->previous_search = (array)session()->get('previous_search') ?? [];
     }
@@ -33,6 +33,30 @@ class Search extends Component
 
         $search_results = Http::get("https://api-eu.attraqt.io/search/$search_token?encoded=$itemArray");
 
+        $items = json_decode($search_results->body())->items;
+
+        if(count($items) > 0){
+            return $items;
+        }
+    }
+
+    private function get_suggested_words()
+    {
+        $search_token = '62069665d3c4595334f58a35';
+        $itemArray = json_encode([
+            'token' => $search_token,
+            'query' => $this->search,
+            'options' => [
+                'offset' => 0,
+                'limit' => 6
+            ]
+        ]);
+
+        $search_results = Http::withBody($itemArray, 'json')
+            ->acceptJson()
+            ->post("https://api-eu.attraqt.io/search/suggest");
+
+        // dd(json_decode($search_results->body()));
         $items = json_decode($search_results->body())->items;
 
         if(count($items) > 0){

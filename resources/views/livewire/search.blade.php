@@ -76,9 +76,9 @@
                     <h3>Suggested</h3>
                     <ul class="search-results" style="max-height: 380px">
                         @if ($suggested_words != null)
-                            @foreach ($suggested_words as $word)
+                            {{-- @foreach ($suggested_words as $word)
                                 <li>{{ $word }}</li>
-                            @endforeach
+                            @endforeach --}}
                         @endif
                     </ul>
                 </div>
