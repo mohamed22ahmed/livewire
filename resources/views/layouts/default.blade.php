@@ -24,24 +24,14 @@
                     <li><a href="/">Home</a></li>
                 </ul>
             </div>
-            <div class="input-group">
-                <input type="search" value="" name="q" id="searchProduct" class="form-control py-2 pl-5 font-size-15 border-right-0 height-40 border-width-2 rounded-left-pill border-primary searchProduct search-input" aria-label="Enter your Author, Title, ISBN" aria-describedby="searchProduct1" placeholder="Enter your Author, Title, ISBN" required="">
-                <div class="input-group-append">
 
-                    <button class="btn btn-primary height-40 py-2 px-3 rounded-right-pill" type="submit" id="searchProduct1"> Search
-                    </button>
-                </div>
-                <div id="result-ajax-search" class="result-ajax-search">
-                    <ul class="search-results" style="max-height: 380px"></ul>
-                </div>
-            </div>
+            <livewire:search />
 
         </div>
     </header>
 
     <div id="main" class="row">
 
-{{--        <livewire:search />--}}
         @yield('content')
     </div>
 
@@ -49,6 +39,7 @@
 
     </footer>
 </div>
+@yield('scripts')
 <!-- Scripts -->
 <script src="{{ asset('js/app.js') }}" defer></script>
 @livewireScripts

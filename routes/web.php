@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\SearchController;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\View;
 
@@ -22,3 +23,5 @@ Route::get('/', function () {
 Route::get('/search', function(){
     return View::make('pages.search');
 });
+
+Route::get('/get_results',[SearchController::class, 'get_results'])->name('get_results');

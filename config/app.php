@@ -16,7 +16,7 @@ return [
     */
 
     'name' => env('APP_NAME', 'Laravel'),
-
+    'image_url' => env('IMAGE_URL', 'https://images.awesomebooks.com'),
     /*
     |--------------------------------------------------------------------------
     | Application Environment
