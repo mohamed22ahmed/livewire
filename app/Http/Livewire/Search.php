@@ -67,16 +67,14 @@ class Search extends Component
         $items = $search_results->json();
 
 
-        dd($items);
-        //Todo: complete it
+
         $items = $items['groups'][0]['items'];
         if (count($items) > 0) {
             return $items;
         }
     }
 
-    public
-    function render()
+    public function render()
     {
         return view('livewire.search');
     }

@@ -74,13 +74,13 @@
 
                 <div class="col-md-4">
                     <h3>Suggested</h3>
-                    <ul class="search-results" style="max-height: 380px">
                         @if ($suggested_words != null)
-                            {{-- @foreach ($suggested_words as $word)
-                                <li>{{ $word }}</li>
-                            @endforeach --}}
+                            @foreach ($suggested_words as $word)
+                                    <h4>
+                                        <a href="/get_results?q={{ $word['product']['title'] }}&page=1&sortBy=popularity">{{ $word['product']['title'] }}</a>
+                                    </h4><br>
+                            @endforeach
                         @endif
-                    </ul>
                 </div>
             </div>
         </div>

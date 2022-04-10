@@ -14,7 +14,6 @@ class SearchController extends Controller
     public function get_results(Request $request){
         // pagination = number of page * 20(limit number)
         $page = isset($request->page) ? $request->page : 1;
-        // $page = isset($request->previous) ? $request->previous_value : $page;
 
         // sortBy from request
         $sortBy = isset($request->sortBy) ? $request->sortBy : 'popularity';
@@ -84,42 +83,5 @@ class SearchController extends Controller
     {
         session()->put('previous_search', []);
         return redirect()->back();
-    }
-
-    /**
-     * for fast testing
-     * @return void
-     */
-    public function suggestedWords()
-    {
-
-        $search_token = '62069665d3c4595334f58a35';
-        $itemArray = [];
-        $itemArray["token"] = $search_token;
-        $itemArray["query"] = "hary";
-        $itemArray["options"] = [
-            "customResponseMask" => "id, product(title,author, price,sales_rank, photo)",
-            "filter" => "",
-            "offset" => 0,
-            "limit" => 6
-        ];
-        $itemArray["options"]["groupBy"] = [
-            "attribute" => "kind",
-            "size" => 6,
-            "values" => ["product"]
-        ];
-
-        $itemArray["options"]["sortBy"][] = [
-            "attribute" => "sales_rank",
-            "order" => "asc"
-        ];
-
-        $search_results = Http::acceptJson()
-            ->post('https://api-eu.attraqt.io/search/suggest', $itemArray);
-        dd($search_results->json());
-
-//        dd($search_results->json());
-        $items = json_decode($search_results->body())->items;
-
     }
 }
