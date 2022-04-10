@@ -19,7 +19,7 @@ class SearchController extends Controller
         // sortBy from request
         $sortBy = isset($request->sortBy) ? $request->sortBy : 'popularity';
 
-        switch($sortBy){
+        switch ($sortBy) {
             case 'price_low_high':
                 $attribute = 'price';
                 $order = 'asc';
@@ -60,12 +60,12 @@ class SearchController extends Controller
         $results = Http::get("https://api-eu.attraqt.io/search/$search_token?encoded=$itemArray");
 
         $items = json_decode($results->body())->items;
-        if(count($items) > 0){
+        if (count($items) > 0) {
             $itemsCount = json_decode($results->body())->metadata->count;
             $this->set_previous_search($request->q);
 
             return view('pages.search')->with(['items' => $items, 'searchQuery' => $request->q, 'itemsCount' => $itemsCount]);
-        } else{
+        } else {
             return redirect()->back()->withErrors("We're sorry! We couldn't find any results. Please try again.");
         }
     }
@@ -73,7 +73,7 @@ class SearchController extends Controller
     public function set_previous_search($q)
     {
         $previous_search_array = (array)session()->get('previous_search') ?? [];
-        if(count($previous_search_array) == 6){
+        if (count($previous_search_array) == 6) {
             array_shift($previous_search_array);
         }
         array_push($previous_search_array, $q);
@@ -84,5 +84,42 @@ class SearchController extends Controller
     {
         session()->put('previous_search', []);
         return redirect()->back();
+    }
+
+    /**
+     * for fast testing
+     * @return void
+     */
+    public function suggestedWords()
+    {
+
+        $search_token = '62069665d3c4595334f58a35';
+        $itemArray = [];
+        $itemArray["token"] = $search_token;
+        $itemArray["query"] = "hary";
+        $itemArray["options"] = [
+            "customResponseMask" => "id, product(title,author, price,sales_rank, photo)",
+            "filter" => "",
+            "offset" => 0,
+            "limit" => 6
+        ];
+        $itemArray["options"]["groupBy"] = [
+            "attribute" => "kind",
+            "size" => 6,
+            "values" => ["product"]
+        ];
+
+        $itemArray["options"]["sortBy"][] = [
+            "attribute" => "sales_rank",
+            "order" => "asc"
+        ];
+
+        $search_results = Http::acceptJson()
+            ->post('https://api-eu.attraqt.io/search/suggest', $itemArray);
+        dd($search_results->json());
+
+//        dd($search_results->json());
+        $items = json_decode($search_results->body())->items;
+
     }
 }

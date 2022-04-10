@@ -2,6 +2,7 @@
 
 namespace App\Http\Livewire;
 
+use http\Message\Body;
 use Illuminate\Support\Facades\Http;
 use Livewire\Component;
 
@@ -32,40 +33,50 @@ class Search extends Component
         $search_token = '62069665d3c4595334f58a35';
 
         $search_results = Http::get("https://api-eu.attraqt.io/search/$search_token?encoded=$itemArray");
-
         $items = json_decode($search_results->body())->items;
-
-        if(count($items) > 0){
+        if (count($items) > 0) {
             return $items;
         }
     }
 
     private function get_suggested_words()
     {
+        $itemArray = [];
         $search_token = '62069665d3c4595334f58a35';
-        $itemArray = json_encode([
-            'token' => $search_token,
-            'query' => $this->search,
-            'options' => [
-                'offset' => 0,
-                'limit' => 6
-            ]
-        ]);
-        return;
+        $itemArray["token"] = $search_token;
+        $itemArray["query"] = $this->search;
+        $itemArray["options"] = [
+            "customResponseMask" => "id, product(title,author, price,sales_rank, photo)",
+            "filter" => "",
+            "offset" => 0,
+            "limit" => 6
+        ];
+        $itemArray["options"]["groupBy"] = [
+            "attribute" => "kind",
+            "size" => 6,
+            "values" => ["product"]
+        ];
+        $itemArray["options"]["sortBy"][] = [
+            "attribute" => "sales_rank",
+            "order" => "asc"
+        ];
 
-        $search_results = Http::withBody($itemArray, 'json')
-            ->acceptJson()
-            ->post("https://api-eu.attraqt.io/search/suggest");
+        $search_results = Http::acceptJson()
+            ->post('https://api-eu.attraqt.io/search/suggest', $itemArray);
 
-        // dd(json_decode($search_results->body()));
-        $items = json_decode($search_results->body())->items;
+        $items = $search_results->json();
 
-        if(count($items) > 0){
+
+        dd($items);
+        //Todo: complete it
+        $items = $items['groups'][0]['items'];
+        if (count($items) > 0) {
             return $items;
         }
     }
 
-    public function render()
+    public
+    function render()
     {
         return view('livewire.search');
     }

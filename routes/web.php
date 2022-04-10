@@ -23,6 +23,8 @@ Route::get('/', function () {
 
 Route::get('/search',[SearchController::class, 'index'])->name('index');
 Route::get('/get_results',[SearchController::class, 'get_results'])->name('get_results');
+Route::get('/suggest', [SearchController::class, "suggestedWords"])->name('suggestedWords');
+
 Route::get('/clear_previous_search', [SearchController::class, 'clear_previous_search'])->name('clear_previous_search');
 
 Route::get('/book/{isbn13}/{slug}/{condition?}', [ProductController::class, 'show'])->name('product.show');
