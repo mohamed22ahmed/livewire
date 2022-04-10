@@ -7,6 +7,10 @@ use Illuminate\Support\Facades\Http;
 
 class SearchController extends Controller
 {
+    public function index(){
+        return view('pages.search');
+    }
+
     public function get_results(Request $request){
         // pagination = number of page * 20(limit number)
         $page = isset($request->page) ? $request->page : 1;

@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\ProductController;
 use App\Http\Controllers\SearchController;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\View;
@@ -20,9 +21,8 @@ Route::get('/', function () {
 });
 
 
-Route::get('/search', function(){
-    return View::make('pages.search');
-});
-
+Route::get('/search',[SearchController::class, 'index'])->name('index');
 Route::get('/get_results',[SearchController::class, 'get_results'])->name('get_results');
 Route::get('/clear_previous_search', [SearchController::class, 'clear_previous_search'])->name('clear_previous_search');
+
+Route::get('/book/{isbn13}/{slug}/{condition?}', [ProductController::class, 'show'])->name('product.show');

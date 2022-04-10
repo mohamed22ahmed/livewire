@@ -10,8 +10,15 @@
                             @endphp
                             <img class="img-fluid" src="{{$imagePath}}" alt="{{$product['title']}}" style="max-height: 200px;"></a>
                     </div>
+                    @php
+                        $title = $product['title'];
+                        $slug = trim($title); // trim the string
+                        $slug= preg_replace('/[^a-zA-Z0-9 -]/','',$slug ); // only take alphanumerical characters, but keep the spaces and dashes too...
+                        $slug= str_replace(' ','-', $slug); // replace spaces by dashes
+                        $slug= strtolower($slug);  // make it lowercase
+                    @endphp
                     <h5 class="mb-1 product-item__title book_title">
-                        <a href="#" class="font-weight-bold">{{$product['title']}}</a></h5>
+                        <a href="{{ '/book/'.$product['ean'].'/'.$slug.'/used' }}" class="font-weight-bold">{{$product['title']}}</a></h5>
 
                     @if($product['author'])
                         <h5 class="mb-1 product-item__title book_author">

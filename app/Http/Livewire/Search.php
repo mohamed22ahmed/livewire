@@ -51,6 +51,7 @@ class Search extends Component
                 'limit' => 6
             ]
         ]);
+        return;
 
         $search_results = Http::withBody($itemArray, 'json')
             ->acceptJson()
