@@ -20,9 +20,10 @@ Route::get('/', function () {
 });
 
 
-Route::get('/search', function(){
+Route::get('/search', function () {
     return View::make('pages.search');
 });
+Route::get('/suggest', [SearchController::class, "suggestedWords"])->name('suggestedWords');
 
-Route::get('/get_results',[SearchController::class, 'get_results'])->name('get_results');
+Route::get('/get_results', [SearchController::class, 'get_results'])->name('get_results');
 Route::get('/clear_previous_search', [SearchController::class, 'clear_previous_search'])->name('clear_previous_search');
