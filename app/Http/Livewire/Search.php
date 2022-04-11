@@ -16,9 +16,11 @@ class Search extends Component
 
     public function get_results()
     {
-        $this->suggested_words = $this->get_suggested_words();
-        $this->results = $this->get_search_results();
-        $this->previous_search = (array)session()->get('previous_search') ?? [];
+        if(strlen($this->search) >= 3){
+            $this->suggested_words = $this->get_suggested_words();
+            $this->results = $this->get_search_results();
+            $this->previous_search = (array)session()->get('previous_search') ?? [];
+        }
     }
 
     private function get_search_results()
