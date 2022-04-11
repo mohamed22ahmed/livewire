@@ -66,12 +66,13 @@ class Search extends Component
 
         $items = $search_results->json();
 
-
-
-        $items = $items['groups'][0]['items'];
-        if (count($items) > 0) {
-            return $items;
+        if($items['groups']){
+            $items = $items['groups'][0]['items'];
+            if (count($items) > 0) {
+                return $items;
+            }
         }
+        return [];
     }
 
     public function render()

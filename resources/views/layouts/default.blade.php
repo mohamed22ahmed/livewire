@@ -5,43 +5,37 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description" content="">
     <title>Awesomebooks</title>
+    @livewireStyles
     <!-- Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700&display=swap" rel="stylesheet">
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
-    @livewireStyles
 </head>
 
-
 <body>
+    <div class="container">
+        <header class="row">
+            <div class="navbar">
+                <div class="navbar-inner">
+                    <a id="logo" href="/">Aesomebooks</a>
+                    <ul class="nav">
+                        <li><a href="/">Home</a></li>
+                    </ul>
+                </div>
 
-<div class="container">
-    <header class="row">
-        <div class="navbar">
-            <div class="navbar-inner">
-                <a id="logo" href="/">Aesomebooks</a>
-                <ul class="nav">
-                    <li><a href="/">Home</a></li>
-                </ul>
+                <livewire:search />
+
             </div>
+        </header>
 
-            <livewire:search />
-
+        <div id="main" class="row">
+            @yield('content')
         </div>
-    </header>
 
-    <div id="main" class="row">
-
-        @yield('content')
+        <footer class="row"></footer>
     </div>
-
-    <footer class="row">
-
-    </footer>
-</div>
-@yield('scripts')
-<!-- Scripts -->
-<script src="{{ asset('js/app.js') }}" defer></script>
-@livewireScripts
+    <!-- Scripts -->
+    <script src="{{ asset('js/app.js') }}" defer></script>
+    @livewireScripts
 </body>
 </html>

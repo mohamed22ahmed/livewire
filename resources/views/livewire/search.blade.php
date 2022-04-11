@@ -87,3 +87,16 @@
         </div>
     </div>
 </form>
+
+@livewireScripts
+<script>
+    document.getElementById("searchProduct").addEventListener("keyup", search_results);
+
+    function search_results(){
+        if(document.getElementById('searchProduct').value != ''){
+            document.getElementById('result-ajax-search').addClass('open'); // Opens the dropdown
+            // document.getElementById('searchProduct').removeClass('open');
+        }
+    }
+
+</script>
