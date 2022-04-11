@@ -1,5 +1,6 @@
 <form action="{{ route('get_results') }}" class="js-focus-state">
     <input type="hidden" name="page" value="1">
+    <input type="hidden" name="sortBy" value="popularity">
     <div class="input-group search_div">
         <input autocomplete="off" type="search" name="q" wire:model="search" wire:keyup="get_results" id="searchProduct"
         class="form-control py-2 pl-5 font-size-15 border-right-0 height-40 border-width-2 rounded-left-pill border-primary searchProduct search-input dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"
@@ -63,24 +64,24 @@
 
                 <div class="col-md-4">
                     <h3>Previous &nbsp; <a href="{{ route('clear_previous_search') }}" style="font-size:18px">Clear</a></h3>
-                    <ul class="search-results" style="max-height: 380px">
-                        @if ($previous_search != null)
-                            @foreach ($previous_search as $previous)
-                                <li>{{ $previous }}</li>
-                            @endforeach
-                        @endif
-                    </ul>
+                    @if ($previous_search != null)
+                        @foreach ($previous_search as $previous)
+                        <h4>
+                            <a href="/get_results?q={{ $previous }}&page=1&sortBy=popularity">{{ $previous }}</a>
+                        </h4><br>
+                        @endforeach
+                    @endif
                 </div>
 
                 <div class="col-md-4">
                     <h3>Suggested</h3>
-                        @if ($suggested_words != null)
-                            @foreach ($suggested_words as $word)
-                                    <h4>
-                                        <a href="/get_results?q={{ $word['product']['title'] }}&page=1&sortBy=popularity">{{ $word['product']['title'] }}</a>
-                                    </h4><br>
-                            @endforeach
-                        @endif
+                    @if ($suggested_words != null)
+                        @foreach ($suggested_words as $word)
+                                <h4>
+                                    <a href="/get_results?q={{ $word['product']['title'] }}&page=1&sortBy=popularity">{{ $word['product']['title'] }}</a>
+                                </h4><br>
+                        @endforeach
+                    @endif
                 </div>
             </div>
         </div>
