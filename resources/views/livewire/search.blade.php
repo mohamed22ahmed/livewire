@@ -13,6 +13,17 @@
         <div id="result-ajax-search" class="result-ajax-search dropdown-menu" style="min-height: 800px; width: 100%">
             <div class="row">
                 <div class="col-md-4">
+                    <h3>Suggested</h3>
+                    @if ($suggested_words != null)
+                        @foreach ($suggested_words as $word)
+                                <h4>
+                                    <a href="/get_results?q={{ $word['product']['title'] }}&page=1&sortBy=popularity">{{ $word['product']['title'] }}</a>
+                                </h4><br>
+                        @endforeach
+                    @endif
+                </div>
+                
+                <div class="col-md-4">
                     <h3>Results</h3>
                     <ul class="search-results" style="max-height: 380px">
                         @if ($results != null)
@@ -69,17 +80,6 @@
                         <h4>
                             <a href="/get_results?q={{ $previous }}&page=1&sortBy=popularity">{{ $previous }}</a>
                         </h4><br>
-                        @endforeach
-                    @endif
-                </div>
-
-                <div class="col-md-4">
-                    <h3>Suggested</h3>
-                    @if ($suggested_words != null)
-                        @foreach ($suggested_words as $word)
-                                <h4>
-                                    <a href="/get_results?q={{ $word['product']['title'] }}&page=1&sortBy=popularity">{{ $word['product']['title'] }}</a>
-                                </h4><br>
                         @endforeach
                     @endif
                 </div>
