@@ -12,9 +12,7 @@
 
         <div id="result-ajax-search" class="result-ajax-search dropdown-menu" style="min-height: 800px; width: 100%">
             <div class="row">
-                <div class="col-md-4" id="suggested_div">
-
-                </div>
+                <div class="col-md-4" id="suggested_div"></div>
 
                 <div class="col-md-4">
                     <h3>Results</h3>
@@ -76,6 +74,7 @@
                         @endforeach
                     @endif
                 </div>
+
             </div>
         </div>
     </div>
@@ -84,7 +83,9 @@
 @livewireScripts
 <script>
     document.getElementById("searchProduct").addEventListener("keyup", search_results);
-
+    document.getElementById("searchProduct").addEventListener("click", ()=>{
+        document.getElementById('suggested_div').innerHTML = '<h3>Suggested</h3>';
+    });
     async function search_results(){
         var input_value = document.getElementById('searchProduct').value
         var html_div = '<h3>Suggested</h3>';
@@ -96,7 +97,7 @@
                     html_div += '<h4>';
                     html_div += '<a href="/get_results?q='+items[i]["product"]["title"].toLowerCase().replace(/ /g, '-').replace(/[^\w-]+/g, '')+'&page=1&sortBy=popularity">'+items[i]['product']['title']+'</a>';
                 }
-                html_div += '</h4><br>'
+                html_div += '</h4>'
             }
         }
 
