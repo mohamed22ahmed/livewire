@@ -12,17 +12,10 @@
 
         <div id="result-ajax-search" class="result-ajax-search dropdown-menu" style="min-height: 800px; width: 100%">
             <div class="row">
-                <div class="col-md-4">
-                    <h3>Suggested</h3>
-                    @if ($suggested_words != null)
-                        @foreach ($suggested_words as $word)
-                                <h4>
-                                    <a href="/get_results?q={{ $word['product']['title'] }}&page=1&sortBy=popularity">{{ $word['product']['title'] }}</a>
-                                </h4><br>
-                        @endforeach
-                    @endif
+                <div class="col-md-4" id="suggested_div">
+
                 </div>
-                
+
                 <div class="col-md-4">
                     <h3>Results</h3>
                     <ul class="search-results" style="max-height: 380px">
@@ -92,11 +85,22 @@
 <script>
     document.getElementById("searchProduct").addEventListener("keyup", search_results);
 
-    function search_results(){
-        if(document.getElementById('searchProduct').value != ''){
-            document.getElementById('result-ajax-search').addClass('open'); // Opens the dropdown
-            // document.getElementById('searchProduct').removeClass('open');
+    async function search_results(){
+        var input_value = document.getElementById('searchProduct').value
+        var html_div = '<h3>Suggested</h3>';
+        if(input_value.length >= 3){
+            let response = await fetch('http://localhost:8000/api/suggest/'+input_value);
+            items = await response.json()
+            if(items.length > 0){
+                for(i=0;i<items.length;i++){
+                    html_div += '<h4>';
+                    html_div += '<a href="/get_results?q='+items[i]["product"]["title"].toLowerCase().replace(/ /g, '-').replace(/[^\w-]+/g, '')+'&page=1&sortBy=popularity">'+items[i]['product']['title']+'</a>';
+                }
+                html_div += '</h4><br>'
+            }
         }
+
+        document.getElementById('suggested_div').innerHTML = html_div;
     }
 
 </script>
