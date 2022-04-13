@@ -42,26 +42,7 @@
                     </div>
 
                     <nav class="d-md-flex justify-content-between align-items-center border-top pt-3" aria-label="Page navigation">
-                        <div class="d-flex ml-2">
-                            <input type="hidden" name="q" value="{{ $searchQuery }}">
-                            <input type="hidden" name="page" value="1">
-
-                            <select class="custom-select" onchange="form.submit()" name="sortBy">
-                                <option value="popularity">Most popular</option>
-                                <option value="price_low_high">Price, low to
-                                    high
-                                </option>
-                                <option value="price_high_low">Price, high to
-                                    low
-                                </option>
-                                <option value="pubdate_low_high">Publication
-                                    date, old to new
-                                </option>
-                                <option value="pubdate_high_low">Publication
-                                    date, new to old
-                                </option>
-                            </select>
-                        </div>
+                        <livewire:sort-by :q="$searchQuery" />
 
                         <div class="float-left d-md-flex mr-2 cat-top-nav d-none d-md-block">
                             <livewire:pagination :itemsCount="$itemsCount" />
@@ -73,7 +54,7 @@
                     aria-labelledby="pills-two-example1-tab" data-target-group="groups">
                     <ul class="row list-unstyled products-group no-gutters">
                         @foreach($items as $item)
-                            <livewire:product :product="(array)$item->product" />
+                            <livewire:product :product="(array)$item->product" :wire:key="$loop->index" />
                         @endforeach
                     </ul>
                 </div>
