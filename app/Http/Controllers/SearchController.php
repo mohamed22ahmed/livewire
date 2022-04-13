@@ -54,16 +54,17 @@ class SearchController extends Controller
                 ]
             ]
         ]);
-        $search_token = '62069665d3c4595334f58a35';
 
+        $search_token =  env('ATTRAQT_SEARCH_TOKEN');
         $results = Http::get("https://api-eu.attraqt.io/search/$search_token?encoded=$itemArray");
 
         $items = json_decode($results->body())->items;
         if (count($items) > 0) {
             $itemsCount = json_decode($results->body())->metadata->count;
+            $facets = json_decode($results->body())->metadata->facets;
             $this->set_previous_search($request->q);
 
-            return view('pages.search')->with(['items' => $items, 'searchQuery' => $request->q, 'itemsCount' => $itemsCount]);
+            return view('pages.search')->with(['items' => $items, 'facets' => $facets, 'searchQuery' => $request->q, 'itemsCount' => $itemsCount]);
         } else {
             return redirect()->back()->withErrors("We're sorry! We couldn't find any results. Please try again.");
         }

@@ -13,27 +13,19 @@
 </head>
 
 <body>
-    <div class="container">
-        <header class="row">
-            <div class="navbar">
-                <div class="navbar-inner">
-                    <a id="logo" href="/">Aesomebooks</a>
-                    <ul class="nav">
-                        <li><a href="/">Home</a></li>
-                    </ul>
-                </div>
-
+    <div class="pb-5">
+        <header class="row  align-items-center justify-content-center">
+            <div class="navbar pt-3">
                 <livewire:search />
-
             </div>
         </header>
-
-        <div id="main" class="row">
-            @yield('content')
-        </div>
-
-        <footer class="row"></footer>
     </div>
+
+    <div id="main" class="container">
+        @yield('content')
+    </div>
+
+    <footer class="row"></footer>
     <!-- Scripts -->
     <script src="{{ asset('js/app.js') }}" defer></script>
     @livewireScripts

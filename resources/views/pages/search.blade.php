@@ -1,21 +1,14 @@
 @extends('layouts.default')
 @section('content')
-<div class="container">
-    <div class="row my-6">
-        <div class="d-none d-xl-block col-xl-3 col-wd-2gdot5">
-            {{-- @include('search.partials.sidebar',[
-            'categoriesBuckets' => $categoriesBuckets,
-            'conditionBuckets' =>$conditionBuckets,
-            'formatsBuckets' => $formatsBuckets,
-            'typesBuckets' => $typesBuckets,] ) --}}
-        </div>
+    <div class="row">
+        <livewire:filters :facets="$facets" />
 
         <div class="col-xl-9 col-wd-9gdot5">
             {{--category Title--}}
-            <div class="d-block d-md-flex flex-center-between mb-3">
+            <div class="d-block d-md-flex  align-items-center justify-content-center mb-3">
                 <h3 class="font-size-25 mb-2 mb-md-0">
                     @if($searchQuery)
-                        Search results for {{$searchQuery}}
+                        Search results for {{ $searchQuery }}
                     @else
                         Test
                     @endif
@@ -64,5 +57,4 @@
             </form>
         </div>
     </div>
-</div>
 @endsection
