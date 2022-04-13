@@ -44,6 +44,7 @@
                     <nav class="d-md-flex justify-content-between align-items-center border-top pt-3" aria-label="Page navigation">
                         <div class="d-flex ml-2">
                             <input type="hidden" name="q" value="{{ $searchQuery }}">
+                            <input type="hidden" name="page" value="1">
 
                             <select class="custom-select" onchange="form.submit()" name="sortBy">
                                 <option value="popularity">Most popular</option>

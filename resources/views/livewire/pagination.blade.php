@@ -1,6 +1,6 @@
 @php
     $params = request()->all();
-    $page = $params['page'];
+    $page = isset($params['page'])?$params['page']:1;
     $q = $params['q'];
     $sortBy = $params['sortBy'];
 @endphp
@@ -11,7 +11,7 @@
 
     <ul class="pagination mb-0 pagination-shop justify-content-center justify-content-md-start">
         <li class="page-item">
-            <button type="submit" wire:click="$set('page', {{ $page }})" name="page" class="btn page-link" {{ $page == 1 ? 'disabled' : '' }} value="{{ $page - 1 }}">Previous</button>
+            <button type="submit" name="page" class="btn page-link" {{ $page == 1 ? 'disabled' : '' }} value="{{ $page - 1 }}">Previous</button>
         </li>
 
         @for ($i = $pageStr; $i <= $pageEnd; $i++)
@@ -21,7 +21,7 @@
         @endfor
 
         <li class="page-item">
-            <button type="submit" wire:click="$set('page', {{ $page }})" name="page" class="btn page-link" {{ $page == ceil($itemsCount/$elementsPerPage) ? 'disabled' : '' }} value="{{ $page+1 }}">Next</button>
+            <button type="submit" name="page" class="btn page-link" {{ $page == ceil($itemsCount/$elementsPerPage) ? 'disabled' : '' }} value="{{ $page+1 }}">Next</button>
         </li>
     </ul>
 </nav>
